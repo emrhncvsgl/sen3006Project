@@ -37,16 +37,7 @@
     <center>
         <SplitPane dividerPositions="0.3">
             <TreeView fx:id="taskTreeView">
-                <contextMenu>
-                    <ContextMenu>
-                        <items>
-                            <MenuItem text="Add Simple Subtask" onAction="#handleAddSimpleSubtask" />
-                            <MenuItem text="Add Composite Subtask" onAction="#handleAddCompositeSubtask" />
-                            <MenuItem text="Mark Completed" onAction="#handleMarkCompleted" />
-                            <MenuItem text="Delete" onAction="#handleDeleteTask" />
-                        </items>
-                    </ContextMenu>
-                </contextMenu>
+                <!-- Context menüsü kaldırıldı - dinamik olarak Java kodunda oluşturuluyor -->
             </TreeView>
             
             <VBox spacing="10">

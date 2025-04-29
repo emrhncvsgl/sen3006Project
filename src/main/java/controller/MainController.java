@@ -123,6 +123,47 @@ public class MainController {
                 }
             }
         });
+        
+        // Set up context menu to only show appropriate options based on task type
+        taskTreeView.setOnContextMenuRequested(event -> {
+            TreeItem<Task> selectedItem = taskTreeView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                Task task = selectedItem.getValue();
+                // Create a new context menu with appropriate options
+                ContextMenu contextMenu = new ContextMenu();
+                
+                // Add different menu items based on task type
+                if (task instanceof CompositeTask) {
+                    // For CompositeTask, show all options
+                    MenuItem addSimpleSubtask = new MenuItem("Add Simple Subtask");
+                    addSimpleSubtask.setOnAction(e -> handleAddSimpleSubtask());
+                    
+                    MenuItem addCompositeSubtask = new MenuItem("Add Composite Subtask");
+                    addCompositeSubtask.setOnAction(e -> handleAddCompositeSubtask());
+                    
+                    MenuItem markCompleted = new MenuItem("Mark Completed");
+                    markCompleted.setOnAction(e -> handleMarkCompleted());
+                    
+                    MenuItem deleteTask = new MenuItem("Delete");
+                    deleteTask.setOnAction(e -> handleDeleteTask());
+                    
+                    contextMenu.getItems().addAll(addSimpleSubtask, addCompositeSubtask, markCompleted, deleteTask);
+                } else {
+                    // For SimpleTask, only show options that don't involve adding subtasks
+                    MenuItem markCompleted = new MenuItem("Mark Completed");
+                    markCompleted.setOnAction(e -> handleMarkCompleted());
+                    
+                    MenuItem deleteTask = new MenuItem("Delete");
+                    deleteTask.setOnAction(e -> handleDeleteTask());
+                    
+                    contextMenu.getItems().addAll(markCompleted, deleteTask);
+                }
+                
+                // Show the context menu
+                contextMenu.show(taskTreeView, event.getScreenX(), event.getScreenY());
+                event.consume();
+            }
+        });
     }
     
     /**
