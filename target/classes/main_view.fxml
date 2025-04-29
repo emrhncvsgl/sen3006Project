@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainController"
+            prefHeight="600.0" prefWidth="800.0">
+            
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu text="File">
+                    <MenuItem text="Save" onAction="#handleSave" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Exit" onAction="#handleExit" />
+                </Menu>
+                <Menu text="Edit">
+                    <MenuItem text="Add Simple Task" onAction="#handleAddSimpleTask" />
+                    <MenuItem text="Add Composite Task" onAction="#handleAddCompositeTask" />
+                    <MenuItem text="Delete Task" onAction="#handleDeleteTask" />
+                </Menu>
+            </MenuBar>
+            
+            <ToolBar>
+                <Button text="Add Simple Task" onAction="#handleAddSimpleTask" />
+                <Button text="Add Composite Task" onAction="#handleAddCompositeTask" />
+                <Button text="Delete" onAction="#handleDeleteTask" />
+                <Separator orientation="VERTICAL" />
+                <Button text="Save" onAction="#handleSave" />
+            </ToolBar>
+        </VBox>
+    </top>
+    
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <TreeView fx:id="taskTreeView">
+                <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem text="Add Simple Subtask" onAction="#handleAddSimpleSubtask" />
+                            <MenuItem text="Add Composite Subtask" onAction="#handleAddCompositeSubtask" />
+                            <MenuItem text="Mark Completed" onAction="#handleMarkCompleted" />
+                            <MenuItem text="Delete" onAction="#handleDeleteTask" />
+                        </items>
+                    </ContextMenu>
+                </contextMenu>
+            </TreeView>
+            
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                </padding>
+                
+                <Label text="Task Details" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="taskNameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    
+                    <Label text="Deadline:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <HBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <DatePicker fx:id="deadlineDatePicker" />
+                        <ComboBox fx:id="deadlineHourComboBox" prefWidth="70" />
+                        <Label text=":" />
+                        <ComboBox fx:id="deadlineMinuteComboBox" prefWidth="70" />
+                    </HBox>
+                    
+                    <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <RadioButton fx:id="notStartedRadio" text="Not Started" toggleGroup="$statusGroup" />
+                        <RadioButton fx:id="inProgressRadio" text="In Progress" toggleGroup="$statusGroup" />
+                        <RadioButton fx:id="completedRadio" text="Completed" toggleGroup="$statusGroup" />
+                    </VBox>
+                    
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                </GridPane>
+                
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Apply Changes" onAction="#handleApplyChanges" />
+                </HBox>
+                
+                <Separator />
+                
+                <Label text="Subtasks" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                <TableView fx:id="subtasksTableView" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="subtaskNameColumn" text="Name" />
+                        <TableColumn fx:id="subtaskStatusColumn" text="Status" />
+                        <TableColumn fx:id="subtaskDeadlineColumn" text="Deadline" />
+                    </columns>
+                </TableView>
+            </VBox>
+        </SplitPane>
+    </center>
+    
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #f0f0f0; -fx-padding: 5px;">
+            <Label fx:id="statusLabel" text="Ready" />
+        </HBox>
+    </bottom>
+    
+</BorderPane>
