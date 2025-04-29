@@ -29,6 +29,8 @@ Each task acts as a subject that notifies its observers of state changes, enabli
 
 To run the application:
 
+1 - Install maven if not installed on your pc
+
 ```bash
-./mvnw javafx:run
+mvn javafx:run 
 ```
